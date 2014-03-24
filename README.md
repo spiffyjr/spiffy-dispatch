@@ -122,7 +122,31 @@ $d->add('bar', 'TestCallable::outputStaticId');
 $d->ispatch('bar', ['id' => 2]);
 ```
 
-## What's up with `ispatch()` instead of `dispatch()`?
+## Lazy-loading and recursion
+
+The dispatcher will continue to dispatch as long as a dispatchable is returned. This allows you to lazy-load objects
+by using a closure (which is dispatchable).
+
+```php
+<?php
+use Spiffy\Dispatch\Dispatcher;
+
+$d = new Dispatcher();
+
+// assume the TestDispatchable class from above
+// instead of this
+$d->add('foo', new TestDispatchable());
+
+// you would do this
+$d->add('foo', function() {
+    return new TestDispatchable();
+});
+
+// the output is identical to the output from Dispatchable above
+// the only difference is that it's lazy loaded on dispatch() instead.
+```
+
+### What's up with `ispatch()` instead of `dispatch()`?
 
 Because it's damn cute, that's why! If you prefer, though, you can use `dispatch()` instead as `ispatch()` is a simple
 proxy call to `dispatch()`.
