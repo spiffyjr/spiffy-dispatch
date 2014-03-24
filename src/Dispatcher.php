@@ -59,11 +59,11 @@ class Dispatcher
     {
         if ($object instanceof \Closure) {
             $result = $this->dispatchClosure($object, $params);
-        } else if ($object instanceof Dispatchable) {
+        } elseif ($object instanceof Dispatchable) {
             $result = $this->dispatchDispatchable($object, $params);
-        } else if (is_object($object) && is_callable($object)) {
+        } elseif (is_object($object) && is_callable($object)) {
             $result = $this->dispatchInvokable($object, $params);
-        } else if (is_callable($object)) {
+        } elseif (is_callable($object)) {
             $result = $this->dispatchCallable($object, $params);
         } else {
             return $object;
@@ -73,7 +73,7 @@ class Dispatcher
     }
 
     /**
-     * @param $callable
+     * @param callable $callable
      * @param array $params
      * @return mixed
      */
@@ -103,7 +103,7 @@ class Dispatcher
     }
 
     /**
-     * @param callable $closure
+     * @param \Closure $closure
      * @param array $params
      * @return mixed
      */
@@ -138,7 +138,7 @@ class Dispatcher
         foreach ($reflection->getParameters() as $param) {
             if (isset($params[$param->getName()])) {
                 $args[] = $params[$param->getName()];
-            } else if (!$param->isOptional()) {
+            } elseif (!$param->isOptional()) {
                 throw new Exception\MissingRequiredArgumentException($param->getName());
             }
         }
