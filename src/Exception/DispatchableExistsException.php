@@ -2,7 +2,7 @@
 
 namespace Spiffy\Dispatch\Exception;
 
-class InvalidDispatchableException extends \RuntimeException
+class DispatchableExistsException extends \InvalidArgumentException
 {
     /**
      * @param string $name
@@ -10,7 +10,7 @@ class InvalidDispatchableException extends \RuntimeException
     public function __construct($name)
     {
         parent::__construct(sprintf(
-            'Failed to dispatch: the dispatchable identified by "%s" is invalid',
+            'The dispatchable with name "%s" already exists',
             $name
         ));
     }

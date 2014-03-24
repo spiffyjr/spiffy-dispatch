@@ -1,12 +1,13 @@
 <?php
 
-namespace Spiffy\Dispatch;
+namespace Spiffy\Dispatch\TestAsset;
+
+use Spiffy\Dispatch\Dispatchable;
 
 class TestDispatchable implements Dispatchable
 {
     public function dispatch(array $params)
     {
-        echo 'invoked with:' . PHP_EOL;
-        print_r($params);
+        return $params;
     }
 }

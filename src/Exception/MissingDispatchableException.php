@@ -2,7 +2,7 @@
 
 namespace Spiffy\Dispatch\Exception;
 
-class MissingRequiredArgumentException extends \RuntimeException
+class MissingDispatchableException extends \InvalidArgumentException
 {
     /**
      * @param string $name
@@ -10,7 +10,7 @@ class MissingRequiredArgumentException extends \RuntimeException
     public function __construct($name)
     {
         parent::__construct(sprintf(
-            'Dispatchable failed to dispatch: missing required parameter "%s"',
+            'The dispatchable with name "%s" does not exist',
             $name
         ));
     }

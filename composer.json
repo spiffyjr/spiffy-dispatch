@@ -16,7 +16,10 @@
     },
     "autoload": {
         "psr-4": {
-            "Spiffy\\Dispatch\\": "src/"
+            "Spiffy\\Dispatch\\": [
+                "src/",
+                "test/"
+            ]
         }
     }
 }
