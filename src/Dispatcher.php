@@ -25,6 +25,15 @@ class Dispatcher
 
     /**
      * @param string $name
+     * @return bool
+     */
+    public function has($name)
+    {
+        return array_key_exists($name, $this->instances);
+    }
+
+    /**
+     * @param string $name
      * @param array $params
      * @return mixed
      * @throws Exception\MissingDispatchableException
@@ -57,7 +66,9 @@ class Dispatcher
      */
     protected function dispatchObject($object, array $params = [])
     {
-        if ($object instanceof \Closure) {
+        if (is_string($object) && class_exists($object)) {
+            $result = new $object();
+        } elseif ($object instanceof \Closure) {
             $result = $this->dispatchClosure($object, $params);
         } elseif ($object instanceof Dispatchable) {
             $result = $this->dispatchDispatchable($object, $params);

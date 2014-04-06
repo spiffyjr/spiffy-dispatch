@@ -63,6 +63,33 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers ::has
+     */
+    public function testHas()
+    {
+        $d = new Dispatcher();
+        $this->assertFalse($d->has('foo'));
+
+        $d->add('foo', 'foo');
+        $this->assertTrue($d->has('foo'));
+
+        $d->add('bar', null);
+        $this->assertTrue($d->has('bar'));
+    }
+
+    /**
+     * @covers ::dispatch, ::dispatchObject
+     */
+    public function testDispatchHandlesClassStrings()
+    {
+        $d = new Dispatcher();
+        $d->add('foo', 'Spiffy\\Dispatch\\TestAsset\\TestDispatchable');
+
+        $params = ['id' => 1, 'slug' => 'bar'];
+        $this->assertSame($params, $d->ispatch('foo', $params));
+    }
+
+    /**
      * @covers ::dispatch, ::dispatchObject, ::dispatchClosure, ::buildArgsFromReflectionFunction
      */
     public function testDispatchHandlesClosures()
