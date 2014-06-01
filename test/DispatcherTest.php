@@ -63,6 +63,29 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers ::get
+     * @expectedException \Spiffy\Dispatch\Exception\MissingDispatchableException
+     * @expectedExceptionMessage The dispatchable with name "foo" does not exist
+     */
+    public function testGetThrowsExceptionWhenMissing()
+    {
+        $d = new Dispatcher();
+        $d->get('foo');
+    }
+
+    /**
+     * @covers ::get
+     */
+    public function testGet()
+    {
+        $foo = new \StdClass();
+
+        $d = new Dispatcher();
+        $d->add('foo', $foo);
+        $this->assertSame($foo, $d->get('foo'));
+    }
+
+    /**
      * @covers ::has
      */
     public function testHas()

@@ -25,6 +25,19 @@ class Dispatcher
 
     /**
      * @param string $name
+     * @return mixed
+     * @throws Exception\MissingDispatchableException
+     */
+    public function get($name)
+    {
+        if (!$this->has($name)) {
+            throw new Exception\MissingDispatchableException($name);
+        }
+        return $this->instances[$name];
+    }
+
+    /**
+     * @param string $name
      * @return bool
      */
     public function has($name)
@@ -40,7 +53,7 @@ class Dispatcher
      */
     public function dispatch($name, array $params = [])
     {
-        if (!isset($this->instances[$name])) {
+        if (!$this->has($name)) {
             throw new Exception\MissingDispatchableException($name);
         }
 
