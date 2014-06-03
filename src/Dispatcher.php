@@ -77,7 +77,7 @@ class Dispatcher
      * @param array $params
      * @return mixed
      */
-    protected function dispatchObject($object, array $params = [])
+    public function dispatchObject($object, array $params = [])
     {
         if (is_string($object) && class_exists($object)) {
             $result = new $object();
@@ -101,7 +101,7 @@ class Dispatcher
      * @param array $params
      * @return mixed
      */
-    protected function dispatchCallable($callable, array $params = [])
+    public function dispatchCallable($callable, array $params = [])
     {
         if (is_string($callable)) {
             $callable = explode('::', $callable);
@@ -118,7 +118,7 @@ class Dispatcher
      * @param array $params
      * @return mixed
      */
-    protected function dispatchInvokable($object, array $params = [])
+    public function dispatchInvokable($object, array $params = [])
     {
         $function = new \ReflectionMethod($object, '__invoke');
         $args = $this->buildArgsFromReflectionFunction($function, $params);
@@ -131,7 +131,7 @@ class Dispatcher
      * @param array $params
      * @return mixed
      */
-    protected function dispatchClosure(\Closure $closure, array $params = [])
+    public function dispatchClosure(\Closure $closure, array $params = [])
     {
         $function = new \ReflectionFunction($closure);
         $args = $this->buildArgsFromReflectionFunction($function, $params);
@@ -144,7 +144,7 @@ class Dispatcher
      * @param array $params
      * @return mixed
      */
-    protected function dispatchDispatchable(Dispatchable $dispatchable, array $params = [])
+    public function dispatchDispatchable(Dispatchable $dispatchable, array $params = [])
     {
         return $dispatchable->dispatch($params);
     }
@@ -155,7 +155,7 @@ class Dispatcher
      * @return array
      * @throws Exception\MissingRequiredArgumentException
      */
-    protected function buildArgsFromReflectionFunction(\ReflectionFunctionAbstract $reflection, array $params)
+    public function buildArgsFromReflectionFunction(\ReflectionFunctionAbstract $reflection, array $params)
     {
         $args = [];
 
